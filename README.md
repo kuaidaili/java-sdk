@@ -5,7 +5,7 @@
 
 运行环境要求`jdk >= 1.6`
 
-### Api接口部分:
+### API接口部分:
 * TestAPI.java: 使用原生库调用API示例
 * TestAPIHttpClient.java: 使用`HttpClient`调用API示例
 
