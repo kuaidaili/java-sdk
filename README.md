@@ -5,6 +5,12 @@
 
 运行环境要求`jdk >= 1.6`
 
+`HttpClient`依赖包:
+* `httpclient-4.5.3.jar`
+* `httpcore-4.4.6.jar`
+* `commons-codec-1.9.jar`
+* `commons-logging-1.2.jar`
+
 ### API接口部分:
 * TestAPI.java: 使用原生库调用API示例
 * TestAPIHttpClient.java: 使用`HttpClient`调用API示例
