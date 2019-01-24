@@ -1,6 +1,6 @@
 # 快代理SDK - Java
 
-## 使用说明:
+## 使用说明
 `HttpRequest`和`HttpResponse`为使用原生库封装的工具类
 
 运行环境要求jdk >= 1.6
