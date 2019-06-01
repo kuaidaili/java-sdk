@@ -24,7 +24,7 @@
 3. 引用方法可参考示例
 
 ## 通过源码包安装
-1. 前往[Github 代码托管地址](https://github.com/kuaidaili/java-sdk) 下载源码压缩包。
+1. 前往[Github 代码托管地址](https://github.com/kuaidaili/java-sdk/tree/master/api-sdk) 下载源码压缩包。
 2. 解压源码包到您项目合适的位置。
 3. 引用方法可参考示例。
 
