@@ -1,4 +1,7 @@
-# 快代理SDK - Java
+# 快代理API SDK - Java
+[详情](https://github.com/kuaidaili/java-sdk/tree/master/api-sdk)
+
+# 快代理官方代码样例 - Java
 
 ## 使用说明
 `HttpRequest`和`HttpResponse`为使用原生库封装的工具类
