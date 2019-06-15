@@ -32,12 +32,6 @@ public class Client {
         this.auth = auth;
     }
 
-    public void signature_required() throws Exception {
-        if (this.auth.getApiKey() == null) {
-            throw new KdlNameError("apiKey is required for signature");
-        }
-    }
-
     public String get_order_expire_time() throws Exception {
         return get_order_expire_time("simple");
     }
@@ -49,7 +43,6 @@ public class Client {
      * @throws Exception
      */
     public String get_order_expire_time(String sign_type) throws Exception {
-        this.signature_required();
         String endpoint = EndPoint.GetOrderExpireTime.getValue();
         Map<String, Object> kwargs = new HashMap<String, Object>();
         kwargs.put("sign_type", sign_type);
@@ -74,7 +67,6 @@ public class Client {
      * @throws Exception
      */
     public String[] get_ip_whitelist(String sign_type) throws Exception {
-        this.signature_required();
         String endpoint = EndPoint.GetIpWhitelist.getValue();
         Map<String, Object> kwargs = new HashMap<String, Object>();
         kwargs.put("sign_type", sign_type);
@@ -127,7 +119,6 @@ public class Client {
      * @throws Exception
      */
     public void set_ip_whitelist(String iplist, String sign_type) throws Exception{
-        this.signature_required();
         String endpoint = EndPoint.SetIpWhitelist.getValue();
         Map<String, Object> kwargs = new HashMap<String, Object>();
         kwargs.put("iplist", iplist);
@@ -181,7 +172,6 @@ public class Client {
      * @throws Exception
      */
     public Map<String, Boolean> check_dps_valid(String proxy, String sign_type) throws Exception {
-        this.signature_required();
         String endpoint = EndPoint.CheckDpsValid.getValue();
         return this._check_proxy_core(endpoint, proxy, sign_type);
     }
@@ -197,7 +187,6 @@ public class Client {
      * @throws Exception
      */
     public int get_ip_balance(String sign_type) throws Exception {
-        this.signature_required();
         String endpoint = EndPoint.GetIpBalance.getValue();
         Map<String, Object> kwargs = new HashMap<String, Object>();
         kwargs.put("sign_type", sign_type);
@@ -331,7 +320,6 @@ public class Client {
      * @throws Exception
      */
     public Map<String, Boolean> check_ops_valid(String proxy, String sign_type) throws Exception {
-        this.signature_required();
         String endpoint = EndPoint.CheckOpsValid.getValue();
         return this._check_proxy_core(endpoint, proxy, sign_type);
     }
@@ -355,13 +343,11 @@ public class Client {
         String sign_type = null;
         if (kwargs.containsKey("sign_type")) {
             sign_type = kwargs.get("sign_type").toString();
+        } else {
+            sign_type = "simple";
+            params.put("sign_type", sign_type);
         }
 
-        if (sign_type == null) {
-            return params;
-        }
-
-        this.signature_required();
         if (sign_type.equals("simple")) {
             params.put("signature", this.auth.getApiKey());
         } else if (sign_type.equals("hmacsha1")) {

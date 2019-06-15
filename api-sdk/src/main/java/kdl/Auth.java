@@ -19,11 +19,6 @@ public class Auth {
         this.apiKey = apiKey;
     }
 
-    public Auth(String orderId) {
-        this.orderId = orderId;
-        this.apiKey = null;
-    }
-
     public String sign(String s) throws Exception {
         return sign(s, "HmacSHA1");
     }
