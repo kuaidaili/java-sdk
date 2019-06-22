@@ -21,6 +21,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.xml.ws.Endpoint;
 import java.net.URI;
 import java.util.*;
 import java.util.regex.Pattern;
@@ -322,6 +323,51 @@ public class Client {
     public Map<String, Boolean> check_ops_valid(String proxy, String sign_type) throws Exception {
         String endpoint = EndPoint.CheckOpsValid.getValue();
         return this._check_proxy_core(endpoint, proxy, sign_type);
+    }
+
+    public Map<String, Integer> get_dps_valid_time(String proxy) throws Exception {
+        return get_dps_valid_time(proxy, "simple");
+    }
+
+    public Map<String, Integer> get_dps_valid_time(String[] proxy) throws Exception {
+        StringBuilder stringBuilder = new StringBuilder();
+        for(String ip: proxy) {
+            stringBuilder.append(ip).append(",");
+        }
+        return get_dps_valid_time(stringBuilder.substring(0, stringBuilder.length()-1), "simple");
+    }
+
+    public Map<String, Integer> get_dps_valid_time(String[] proxy, String sign_type) throws Exception {
+        StringBuilder stringBuilder = new StringBuilder();
+        for(String ip: proxy) {
+            stringBuilder.append(ip).append(",");
+        }
+        return get_dps_valid_time(stringBuilder.substring(0, stringBuilder.length()-1), sign_type);
+    }
+
+    /**
+     * @param proxy 代理字符串, 逗号隔开
+     * @param sign_type "simple"
+     * @return Map<String, Integer> 格式为: proxy: seconds(秒数)
+     * @throws Exception
+     */
+    public Map<String, Integer> get_dps_valid_time(String proxy, String sign_type) throws Exception {
+        String endpoint = EndPoint.GetDpsValidTime.getValue();
+        Map<String, Object> kwargs = new HashMap<String, Object>();
+        kwargs.put("proxy", proxy);
+        kwargs.put("sign_type", sign_type);
+        Map<String, Object> params = this._get_params(endpoint, kwargs);
+        String[] res = this._get_base_res("GET", endpoint, params);
+        if (res[1].equals("json")) {
+            JSONObject data = new JSONObject(res[0]).getJSONObject("data");
+            Set<String> keys = data.keySet();
+            Map<String, Integer> valids = new HashMap<String, Integer>();
+            for (String key: keys) {
+                valids.put(key, data.getInt(key));
+            }
+            return valids;
+        }
+        return new HashMap<String, Integer>();
     }
 
 

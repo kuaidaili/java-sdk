@@ -11,7 +11,8 @@ public enum EndPoint {
     GetOpsProxyEnt("ent.kdlapi.com/api/getproxy"),
     CheckDpsValid("dps.kdlapi.com/api/checkdpsvalid"),
     CheckOpsValid("dev.kdlapi.com/api/checkopsvalid"),
-    GetIpBalance("dps.kdlapi.com/api/getipbalance");
+    GetIpBalance("dps.kdlapi.com/api/getipbalance"),
+    GetDpsValidTime("dps.kdlapi.com/api/getdpsvalidtime");
 
     private String value;
 

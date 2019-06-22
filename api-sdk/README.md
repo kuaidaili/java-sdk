@@ -104,6 +104,11 @@ public class useDps {
         int ip_balance = client.get_ip_balance();
         System.out.println("ip_balance: " + ip_balance);
 
+        // ----------------------------------------------------------------------------------
+        // 获取私密代理剩余时间(秒数), 返回 Map<String, Integer> 类型, 格式为 proxy: seconds(秒数)
+        String[] ips = client.get_dps(5)
+        Map<String, Integer> seconds = client.get_dps_valid_time(ips)
+        System.out.println("seconds: " + Arrays.toString(seconds.entrySet().toArray()));
     }
 }
 ```
