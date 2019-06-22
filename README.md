@@ -1,5 +1,5 @@
 # 快代理API SDK - Java
-[详情](https://github.com/kuaidaili/java-sdk/tree/master/api-sdk)
+通过SDK可快速调用API接口，[查看详情](https://github.com/kuaidaili/java-sdk/tree/master/api-sdk)
 
 # 快代理官方代码样例 - Java
 
@@ -41,3 +41,4 @@
 
 * 技术支持微信：<a href="https://img.kuaidaili.com/img/service_wx.jpg">kuaidaili</a>
 * 技术支持QQ：<a href="http://q.url.cn/CDksXo?_type=wpa&qidian=true">800849628</a>
+
