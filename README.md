@@ -30,7 +30,15 @@
 ### TestProxyHttpClient.java
 使用`HttpClient`请求Http代理服务器, 请求http和https网页均适用
 
+## 隧道代理
 
+### TestTpsProxy.java
+使用原生库请求隧道代理服务器, 请求http和https网页均适用
+
+
+### TestTpsProxyHttpClient.java
+使用`HttpClient`请求隧道代理服务器, 请求http和https网页均适用
+ 
 
 ## 技术支持
 如果您发现代码有任何问题, 请提交`Issue`。
