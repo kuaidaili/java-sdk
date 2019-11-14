@@ -26,6 +26,10 @@ import java.net.URI;
 import java.util.*;
 import java.util.regex.Pattern;
 
+/**
+ * client 封装所有api接口
+ */
+
 public class Client {
     private Auth auth;
 
@@ -39,6 +43,7 @@ public class Client {
 
     /**
      * 获取订单到期时间, 强制签名验证
+     *
      * @param sign_type 签名方式： "simple" or "hmacsha1"
      * @return 订单过期时间字符串
      * @throws Exception
@@ -63,6 +68,7 @@ public class Client {
 
     /**
      * 获取ip白名单, 强制签名验证
+     *
      * @param sign_type "simple" or "hmacsha1"
      * @return String[] ip白名单数组
      * @throws Exception
@@ -117,6 +123,7 @@ public class Client {
 
     /**
      * 设置ip白名单，无返回数据, 强制签名验证
+     *
      * @param iplist  ip字符串, 逗号隔开
      * @param sign_type "simple" or "hmacsha1"
      * @throws Exception
@@ -136,6 +143,7 @@ public class Client {
 
     /**
      * 提取私密代理, 默认不需要鉴权
+     *
      * @param num 提取数量
      * @param kwargs 其他参数, 键值对形式存入Map<String, Object>中
      * @return String[] proxy数组
@@ -169,6 +177,7 @@ public class Client {
 
     /**
      * 检测私密代理有效性, 强制签名验证
+     *
      * @param proxy ip字符串，逗号隔开
      * @param sign_type "simple" or "hmacsha1"
      * @return Map<String, Boolean> proxy: true/false
@@ -185,6 +194,7 @@ public class Client {
 
     /**
      * 私密代理计数版：获取订单的ip余额, 强制签名验证
+     *
      * @param sign_type "simple" or "hmacsha1"
      * @return int ip余额
      * @throws Exception
@@ -253,6 +263,7 @@ public class Client {
 
     /**
      * 提取独享代理, 默认不需要鉴权
+     *
      * @param num 提取数量
      * @param kwargs 其他参数
      * @return String[] 代理数组
@@ -278,6 +289,7 @@ public class Client {
 
     /**
      * 提取开放代理, 默认不需要鉴权
+     *
      * @param num 提取数量
      * @param order_level 订单级别, 默认是dev, 如果是svip订单，请传入"svip", 如果是ent订单, 请传入"ent"
      * @param kwargs 其他参数
@@ -418,7 +430,7 @@ public class Client {
     }
 
     /**
-     *处理基础请求
+     * 处理基础请求
      *
      * @param method  请求方法："GET" or "POST"
      * @param endpoint 请求主机+地址

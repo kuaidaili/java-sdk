@@ -25,6 +25,7 @@ public class Auth {
 
     /**
      * 生成原字符串
+     *
      * @param method  请求方式
      * @param s  已经拼接好的原字符串
      * @return Hmacsha1加密，并base64编码之后的原字符串。
@@ -40,6 +41,7 @@ public class Auth {
 
     /**
      * 生成原字符串
+     *
      * @param endpoint 访问的地址
      * @param method  请求方式
      * @param params  其他参数

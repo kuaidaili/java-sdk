@@ -1,4 +1,7 @@
 package kdl.enums;
+/**
+ * 各个api的主机+路径
+ */
 
 public enum EndPoint {
     GetOrderExpireTime("dev.kdlapi.com/api/getorderexpiretime"),
