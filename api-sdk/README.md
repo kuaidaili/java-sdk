@@ -3,8 +3,8 @@
 
 # 依赖环境
 1. JDK 7版本及以上
-2. 从[快代理](https://kuaidaili.com)购买相应产品
-3. 获取订单的orderId 和 apiKey
+2. 从[快代理](https://www.kuaidaili.com)购买相应产品
+3. [获取订单的`orderId`和`apiKey`](https://www.kuaidaili.com/usercenter/api/settings/)
 
 # 获取安装
 安装API SDK Java 之前, 请先获取订单对应的订单号和apiKey。订单号是用于标识订单, apiKey是用于加密签名字符串和服务器端验证签名字符串的密钥。apiKey必须严格保管,避免泄露。

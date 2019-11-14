@@ -23,6 +23,13 @@ public class Auth {
         return sign(s, "HmacSHA1");
     }
 
+    /**
+     * 生成原字符串
+     * @param method  请求方式
+     * @param s  已经拼接好的原字符串
+     * @return Hmacsha1加密，并base64编码之后的原字符串。
+     * @throws Exception
+     */
     public String sign(String s, String method) throws Exception {
         Mac mac = Mac.getInstance(method);
         SecretKeySpec secretKeySpec = new SecretKeySpec(this.apiKey.getBytes(CHARSET), mac.getAlgorithm());
@@ -31,6 +38,14 @@ public class Auth {
         return DatatypeConverter.printBase64Binary(hash);
     }
 
+    /**
+     * 生成原字符串
+     * @param endpoint 访问的地址
+     * @param method  请求方式
+     * @param params  其他参数
+     * @return 返回拼接好的原字符串
+     * @throws Exception
+     */
     public  String getStringToSign(String method, String endpoint, TreeMap<String, Object> params) {
         String s = method + endpoint.split(".com")[1] + "?";
         StringBuilder s2s = new StringBuilder();

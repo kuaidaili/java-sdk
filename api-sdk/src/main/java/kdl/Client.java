@@ -85,9 +85,11 @@ public class Client {
         return new String[]{};
     }
 
+
     public void set_ip_whitelist(String iplist) throws Exception {
         set_ip_whitelist(iplist, "simple");
     }
+
 
     public void set_ip_whitelist(String[] iplist) throws Exception {
         if (iplist.length == 0) {
@@ -315,6 +317,7 @@ public class Client {
 
     /**
      * 检测开放代理有效性, 强制鉴权
+     *
      * @param proxy 代理字符串, 逗号隔开
      * @param sign_type "simple"
      * @return Map<String, Boolean> 格式为: proxy: true/false
@@ -346,6 +349,8 @@ public class Client {
     }
 
     /**
+     * 检测私密代理ip有效时间
+     *
      * @param proxy 代理字符串, 逗号隔开
      * @param sign_type "simple"
      * @return Map<String, Integer> 格式为: proxy: seconds(秒数)
@@ -413,6 +418,7 @@ public class Client {
     }
 
     /**
+     *处理基础请求
      *
      * @param method  请求方法："GET" or "POST"
      * @param endpoint 请求主机+地址
