@@ -3,7 +3,6 @@ package kdl.enums;
 /**
  * 开放代理订单级别
  */
-
 public enum OpsOrderLevel {
     NORMAL("dev"),
     VIP("dev"),

@@ -1,11 +1,21 @@
 package kdl;
 
 import com.sun.org.apache.xpath.internal.operations.Bool;
+
+import java.net.URI;
+
+import java.util.*;
+import java.util.regex.Pattern;
+
+import javax.xml.ws.Endpoint;
+
 import kdl.enums.EndPoint;
 import kdl.enums.OpsOrderLevel;
+
 import kdl.exceptions.KdlException;
 import kdl.exceptions.KdlNameError;
 import kdl.exceptions.KdlStatusError;
+
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -17,19 +27,14 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import javax.xml.ws.Endpoint;
-import java.net.URI;
-import java.util.*;
-import java.util.regex.Pattern;
-
 /**
  * client 封装所有api接口
  */
-
 public class Client {
     private Auth auth;
 
@@ -91,11 +96,9 @@ public class Client {
         return new String[]{};
     }
 
-
     public void set_ip_whitelist(String iplist) throws Exception {
         set_ip_whitelist(iplist, "simple");
     }
-
 
     public void set_ip_whitelist(String[] iplist) throws Exception {
         if (iplist.length == 0) {

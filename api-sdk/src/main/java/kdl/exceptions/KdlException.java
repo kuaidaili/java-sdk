@@ -1,7 +1,10 @@
 package kdl.exceptions;
 
-
+/*
+ * 快代理自定义异常
+ */
 public class KdlException extends Exception {
+
     private int code;
     private String message;
     private String hintMessage;
@@ -11,7 +14,6 @@ public class KdlException extends Exception {
         this.message = message;
         this.hintMessage = String.format("[KdlException] code: %d message: %s", this.code, this.message);
     }
-
 
     public String getHintMessage() {
         return hintMessage;
