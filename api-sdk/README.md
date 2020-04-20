@@ -18,7 +18,7 @@
 <dependency>
 	<groupId>com.github.kuaidaili</groupId>
 	<artifactId>kdl</artifactId>
-	<version>0.0.1</version>
+	<version>0.1.1</version>
 </dependency>
 ```
 3. 引用方法可参考示例
