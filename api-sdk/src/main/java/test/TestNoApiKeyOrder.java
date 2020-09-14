@@ -12,7 +12,7 @@ import java.util.Map;
 import static org.junit.Assert.*;
 
 public class TestNoApiKeyOrder {
-    private Auth auth = new Auth("yourorderid");
+    private Auth auth = new Auth("yourorderid", "");
     private Client client = new Client(auth);
 
     @Test(expected = KdlException.class)

@@ -15,7 +15,8 @@ public enum EndPoint {
     CheckDpsValid("dps.kdlapi.com/api/checkdpsvalid"),
     CheckOpsValid("dev.kdlapi.com/api/checkopsvalid"),
     GetIpBalance("dps.kdlapi.com/api/getipbalance"),
-    GetDpsValidTime("dps.kdlapi.com/api/getdpsvalidtime");
+    GetDpsValidTime("dps.kdlapi.com/api/getdpsvalidtime"),
+    GetUserAgent("www.kuaidaili.com/api/getua");
 
     private String value;
 
