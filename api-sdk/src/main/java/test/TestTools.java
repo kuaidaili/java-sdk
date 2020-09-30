@@ -8,8 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TestTools {
-//    private Auth auth = new Auth("yourorderid", "yourapikey");
-    private Auth auth = new Auth("999901638519220", "n2iu8nzo62hkuuu6yfxlrzjetlk6o4xd");
+    private Auth auth = new Auth("yourorderid", "yourapikey");
     private Client client = new Client(auth);
 
     @Test
