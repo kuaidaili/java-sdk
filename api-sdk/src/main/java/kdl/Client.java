@@ -393,12 +393,11 @@ public class Client {
     /**
      * 获取UserAgent
      *
-     * @param num 获取ua个数
      * @param kwargs 请求参数Map
      * @return 字符串list
      * @throws Exception
      */
-    public String[] get_ua(int num, Map<String, Object> kwargs) throws Exception {
+    public String[] getua(Map<String, Object> kwargs) throws Exception {
         String endpoint = EndPoint.GetUserAgent.getValue();
         Map<String, Object> params = this._get_params(endpoint, kwargs);
         for (String k : kwargs.keySet()) {
