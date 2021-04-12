@@ -1,3 +1,5 @@
-/api-sdk/.idea/
-*.iml
-/api-sdk/target/
+*.pyc
+/venv
+.idea
+*.bat
+*.log
