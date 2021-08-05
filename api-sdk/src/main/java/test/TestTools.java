@@ -14,12 +14,10 @@ public class TestTools {
     @Test
     public void test_get_ua() throws Exception {
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put("num", 5);
         params.put("dt", "pc");                 // 多个筛选以,分隔。如pc,pad
         params.put("platform", "mac,linux");    // 多个筛选以,分隔。如linux,win
         params.put("browser", "chrome");        // 多个筛选以,分隔。如chrome,weixin
-
-        String[] result = client.get_ua(params);
+        String[] result = client.get_ua(5 ,params);
         for (String c:result) {
             System.out.println(c);
         }

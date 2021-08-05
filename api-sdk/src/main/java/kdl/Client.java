@@ -393,12 +393,14 @@ public class Client {
     /**
      * 获取UserAgent
      *
-     * @param kwargs 请求参数Map
+     * @param num 获取ua数量
+     * @param kwargs 其他参数
      * @return 字符串list
      * @throws Exception
      */
-    public String[] get_ua(Map<String, Object> kwargs) throws Exception {
+    public String[] get_ua(int num, Map<String, Object> kwargs) throws Exception {
         String endpoint = EndPoint.GetUserAgent.getValue();
+        kwargs.put("num", num);
         Map<String, Object> params = this._get_params(endpoint, kwargs);
         for (String k : kwargs.keySet()) {
             params.put(k, kwargs.get(k).toString());
@@ -414,6 +416,60 @@ public class Client {
             return uas;
         }
         return new String[]{res[0]};
+    }
+
+    /**
+     * 获取指定地区编码
+     *
+     * @param  area 地区名
+     * @param kwargs 其他参数
+     * @return Map<String, String> area: area_code
+     * @throws Exception
+     */
+    public Map<String, String> get_area_code(String area, Map<String, Object> kwargs) throws Exception {
+        String endpoint = EndPoint.GetAreaCode.getValue();
+        kwargs.put("area", area);
+        Map<String, Object> params = this._get_params(endpoint, kwargs);
+        for (String k : kwargs.keySet()) {
+            params.put(k, kwargs.get(k).toString());
+        }
+        String[] res = this._get_base_res("GET", endpoint, params);
+        if (res[1].equals("json")) {
+            JSONObject data = new JSONObject(res[0]).getJSONObject("data");
+            Set<String> keys = data.keySet();
+            Map<String, String> areaRes = new HashMap<String, String>();
+            for (String key: keys) {
+                areaRes.put(key, data.getString(key));
+            }
+            return areaRes;
+        }
+        return new HashMap<String, String>();
+    }
+
+    /**
+     * 获取指定地区编码
+     *
+     * @param kwargs 其他参数
+     * @return Map<String, String> area: area_code
+     * @throws Exception
+     */
+    public Map<String, String> get_account_balance(Map<String, Object> kwargs) throws Exception {
+        String endpoint = EndPoint.GetAccountBalance.getValue();
+        Map<String, Object> params = this._get_params(endpoint, kwargs);
+        for (String k : kwargs.keySet()) {
+            params.put(k, kwargs.get(k).toString());
+        }
+        String[] res = this._get_base_res("GET", endpoint, params);
+        if (res[1].equals("json")) {
+            JSONObject data = new JSONObject(res[0]).getJSONObject("data");
+            Set<String> keys = data.keySet();
+            Map<String, String> balance = new HashMap<String, String>();
+            for (String key: keys) {
+                balance.put(key, data.getString(key));
+            }
+            return balance;
+        }
+        return new HashMap<String, String>();
     }
 
 
