@@ -18,7 +18,12 @@ public enum EndPoint {
     GetDpsValidTime("dps.kdlapi.com/api/getdpsvalidtime"),
     GetUserAgent("dev.kdlapi.com/api/getua"),
     GetAreaCode("dev.kdlapi.com/api/getareacode"),
-    GetAccountBalance("dev.kdlapi.com/api/getaccountbalance");
+    GetAccountBalance("dev.kdlapi.com/api/getaccountbalance"),
+    CreateOrder("dev.kdlapi.com/api/createorder"),
+    GetOrderInfo("dev.kdlapi.com/api/getorderinfo"),
+    SetAutoRenew("dev.kdlapi.com/api/setautorenew"),
+    CloseOrder("dev.kdlapi.com/api/closeorder"),
+    QueryKpsCity("dev.kdlapi.com/api/querykpscity");
 
 
     private String value;

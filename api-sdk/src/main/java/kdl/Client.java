@@ -1,6 +1,6 @@
 package kdl;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
+//import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import java.net.URI;
 
@@ -447,10 +447,10 @@ public class Client {
     }
 
     /**
-     * 获取指定地区编码
+     * 获取账户余额
      *
      * @param kwargs 其他参数
-     * @return Map<String, String> area: area_code
+     * @return Map<String, String>
      * @throws Exception
      */
     public Map<String, String> get_account_balance(Map<String, Object> kwargs) throws Exception {
@@ -468,6 +468,144 @@ public class Client {
                 balance.put(key, data.getString(key));
             }
             return balance;
+        }
+        return new HashMap<String, String>();
+    }
+
+    /**
+     * 创建订单，自动从账户余额里结算费用
+     *
+     * @param  product 开通的产品类型
+     * @param  pay_type 付费方式
+     * @param kwargs 其他参数
+     * @return Map<String, String>
+     * @throws Exception
+     */
+    public Map<String, String> create_order(String product, String pay_type, Map<String, Object> kwargs) throws Exception {
+        String endpoint = EndPoint.CreateOrder.getValue();
+        kwargs.put("product", product);
+        kwargs.put("pay_type", pay_type);
+        Map<String, Object> params = this._get_params(endpoint, kwargs);
+        for (String k : kwargs.keySet()) {
+            params.put(k, kwargs.get(k).toString());
+        }
+        String[] res = this._get_base_res("GET", endpoint, params);
+        if (res[1].equals("json")) {
+            JSONObject data = new JSONObject(res[0]).getJSONObject("data");
+            Set<String> keys = data.keySet();
+            Map<String, String> Response = new HashMap<String, String>();
+            for (String key: keys) {
+                Response.put(key, data.getString(key));
+            }
+            return Response;
+        }
+        return new HashMap<String, String>();
+    }
+
+    /**
+     * 获取订单的详细信息
+     *
+     * @param kwargs 其他参数
+     * @return Map<String, String>
+     * @throws Exception
+     */
+    public Map<String, String> get_order_info(Map<String, Object> kwargs) throws Exception {
+        String endpoint = EndPoint.GetOrderInfo.getValue();
+        Map<String, Object> params = this._get_params(endpoint, kwargs);
+        for (String k : kwargs.keySet()) {
+            params.put(k, kwargs.get(k).toString());
+        }
+        String[] res = this._get_base_res("GET", endpoint, params);
+        if (res[1].equals("json")) {
+            JSONObject data = new JSONObject(res[0]).getJSONObject("data");
+            Set<String> keys = data.keySet();
+            Map<String, String> Response = new HashMap<String, String>();
+            for (String key: keys) {
+                Response.put(key, data.getString(key));
+            }
+            return Response;
+        }
+        return new HashMap<String, String>();
+    }
+
+    /**
+     * 开启/关闭订单自动续费
+     *
+     * @param  autorenew 开启/关闭自动续费
+     * @param kwargs 其他参数
+     * @return Map<String, String>
+     * @throws Exception
+     */
+    public Map<String, String> set_auto_renew(String autorenew, Map<String, Object> kwargs) throws Exception {
+        String endpoint = EndPoint.SetAutoRenew.getValue();
+        kwargs.put("autorenew", autorenew);
+        Map<String, Object> params = this._get_params(endpoint, kwargs);
+        for (String k : kwargs.keySet()) {
+            params.put(k, kwargs.get(k).toString());
+        }
+        String[] res = this._get_base_res("GET", endpoint, params);
+        if (res[1].equals("json")) {
+            JSONObject data = new JSONObje ct(res[0]).getJSONObject("data");
+            Set<String> keys = data.keySet();
+            Map<String, String> Response = new HashMap<String, String>();
+            for (String key: keys) {
+                Response.put(key, data.getString(key));
+            }
+            return Response;
+        }
+        return new HashMap<String, String>();
+    }
+
+    /**
+     * 关闭指定订单, 此接口只对按量付费(后付费)订单有效
+     *
+     * @param kwargs 其他参数
+     * @return Map<String, String>
+     * @throws Exception
+     */
+    public Map<String, String> close_order(Map<String, Object> kwargs) throws Exception {
+        String endpoint = EndPoint.CloseOrder.getValue();
+        Map<String, Object> params = this._get_params(endpoint, kwargs);
+        for (String k : kwargs.keySet()) {
+            params.put(k, kwargs.get(k).toString());
+        }
+        String[] res = this._get_base_res("GET", endpoint, params);
+        if (res[1].equals("json")) {
+            JSONObject data = new JSONObject(res[0]).getJSONObject("data");
+            Set<String> keys = data.keySet();
+            Map<String, String> Response = new HashMap<String, String>();
+            for (String key: keys) {
+                Response.put(key, data.getString(key));
+            }
+            return Response;
+        }
+        return new HashMap<String, String>();
+    }
+
+    /**
+     * 查询独享代理有哪些城市可供开通。对于IP共享型还可查询到每个城市可开通的IP数量
+     *
+     * @param  serie 独享类型  1: IP共享型  2: IP独享型
+     * @param kwargs 其他参数
+     * @return Map<String, String>
+     * @throws Exception
+     */
+    public Map<String, String> query_kps_city(String serie, Map<String, Object> kwargs) throws Exception {
+        String endpoint = EndPoint.SetAutoRenew.getValue();
+        kwargs.put("serie", serie);
+        Map<String, Object> params = this._get_params(endpoint, kwargs);
+        for (String k : kwargs.keySet()) {
+            params.put(k, kwargs.get(k).toString());
+        }
+        String[] res = this._get_base_res("GET", endpoint, params);
+        if (res[1].equals("json")) {
+            JSONObject data = new JSONObje ct(res[0]).getJSONObject("data");
+            Set<String> keys = data.keySet();
+            Map<String, String> Response = new HashMap<String, String>();
+            for (String key: keys) {
+                Response.put(key, data.getString(key));
+            }
+            return Response;
         }
         return new HashMap<String, String>();
     }
