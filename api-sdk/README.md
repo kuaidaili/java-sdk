@@ -9,20 +9,6 @@
 # 获取安装
 安装API SDK Java 之前, 请先获取订单对应的订单号和apiKey。订单号是用于标识订单, apiKey是用于加密签名字符串和服务器端验证签名字符串的密钥。apiKey必须严格保管,避免泄露。
 
-## 通过Maven安装(推荐)
-通过 Maven 获取安装是使用 JAVA SDK 的推荐方法，Maven 是 JAVA 的依赖管理工具，支持您项目所需的依赖项，并将其安装到项目中。关于 Maven 详细可参考 Maven 官网 。
-
-1. 请访问[Maven官网](https://maven.apache.org/)下载对应系统Maven安装包进行安装。
-2. 为您的项目添加 Maven 依赖项，只需在 Maven pom.xml 添加以下依赖项即可。注意这里的版本号只是举例,您可以在[Maven仓库](https://search.maven.org/search?q=kdl)上找到最新的版本。：
-``` java
-<dependency>
-	<groupId>com.github.kuaidaili</groupId>
-	<artifactId>kdl</artifactId>
-	<version>0.1.1</version>
-</dependency>
-```
-3. 引用方法可参考示例
-
 ## 通过源码包安装
 1. 前往[Github 代码托管地址](https://github.com/kuaidaili/java-sdk/tree/master/api-sdk) 下载源码压缩包。
 2. 解压源码包到您项目合适的位置。

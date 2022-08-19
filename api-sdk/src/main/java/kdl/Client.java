@@ -545,7 +545,7 @@ public class Client {
         }
         String[] res = this._get_base_res("GET", endpoint, params);
         if (res[1].equals("json")) {
-            JSONObject data = new JSONObje ct(res[0]).getJSONObject("data");
+            JSONObject data = new JSONObject(res[0]).getJSONObject("data");
             Set<String> keys = data.keySet();
             Map<String, String> Response = new HashMap<String, String>();
             for (String key: keys) {
@@ -599,7 +599,7 @@ public class Client {
         }
         String[] res = this._get_base_res("GET", endpoint, params);
         if (res[1].equals("json")) {
-            JSONObject data = new JSONObje ct(res[0]).getJSONObject("data");
+            JSONObject data = new JSONObject(res[0]).getJSONObject("data");
             Set<String> keys = data.keySet();
             Map<String, String> Response = new HashMap<String, String>();
             for (String key: keys) {
