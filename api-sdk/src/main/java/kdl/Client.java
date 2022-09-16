@@ -7,6 +7,13 @@ import java.net.URI;
 import java.util.*;
 import java.util.regex.Pattern;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import javax.xml.ws.Endpoint;
 
 import kdl.enums.EndPoint;
@@ -16,6 +23,7 @@ import kdl.exceptions.KdlException;
 import kdl.exceptions.KdlNameError;
 import kdl.exceptions.KdlStatusError;
 
+import org.apache.commons.codec.binary.StringUtils;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -37,19 +45,19 @@ import org.json.JSONObject;
  */
 public class Client {
     private Auth auth;
-
     public Client(Auth auth) {
         this.auth = auth;
     }
+    public String secretPath = "./.secret";
 
     public String get_order_expire_time() throws Exception {
-        return get_order_expire_time("simple");
+        return get_order_expire_time("token");
     }
 
     /**
      * 获取订单到期时间, 强制签名验证
      *
-     * @param sign_type 签名方式： "simple" or "hmacsha1"
+     * @param sign_type 签名方式： "token" or "hmacsha1"
      * @return 订单过期时间字符串
      * @throws Exception
      */
@@ -68,13 +76,13 @@ public class Client {
 
 
     public String[] get_ip_whitelist() throws Exception {
-        return get_ip_whitelist("simple");
+        return get_ip_whitelist("token");
     }
 
     /**
      * 获取ip白名单, 强制签名验证
      *
-     * @param sign_type "simple" or "hmacsha1"
+     * @param sign_type "token" or "hmacsha1"
      * @return String[] ip白名单数组
      * @throws Exception
      */
@@ -97,19 +105,19 @@ public class Client {
     }
 
     public void set_ip_whitelist(String iplist) throws Exception {
-        set_ip_whitelist(iplist, "simple");
+        set_ip_whitelist(iplist, "token");
     }
 
     public void set_ip_whitelist(String[] iplist) throws Exception {
         if (iplist.length == 0) {
-            set_ip_whitelist("", "simple");
+            set_ip_whitelist("", "token");
             return;
         }
         StringBuilder stringBuilder = new StringBuilder();
         for (String ip: iplist) {
             stringBuilder.append(ip).append(",");
         }
-        set_ip_whitelist(stringBuilder.toString().substring(0, stringBuilder.length()-1), "simple");
+        set_ip_whitelist(stringBuilder.toString().substring(0, stringBuilder.length()-1), "token");
     }
 
     public void set_ip_whitelist(String[] iplist, String sign_type) throws Exception {
@@ -128,7 +136,7 @@ public class Client {
      * 设置ip白名单，无返回数据, 强制签名验证
      *
      * @param iplist  ip字符串, 逗号隔开
-     * @param sign_type "simple" or "hmacsha1"
+     * @param sign_type "token" or "hmacsha1"
      * @throws Exception
      */
     public void set_ip_whitelist(String iplist, String sign_type) throws Exception{
@@ -159,7 +167,7 @@ public class Client {
     }
 
     public Map<String, Boolean> check_dps_valid(String proxy) throws Exception {
-        return check_dps_valid(proxy, "simple");
+        return check_dps_valid(proxy, "token");
     }
 
     public Map<String, Boolean> check_dps_valid(String[] proxy) throws Exception {
@@ -167,7 +175,7 @@ public class Client {
         for (String ip: proxy) {
             stringBuilder.append(ip).append(",");
         }
-        return check_dps_valid(stringBuilder.toString().substring(0, stringBuilder.length()-1), "simple");
+        return check_dps_valid(stringBuilder.toString().substring(0, stringBuilder.length()-1), "token");
     }
 
     public Map<String, Boolean> check_dps_valid(String[] proxy, String sign_type) throws Exception {
@@ -182,7 +190,7 @@ public class Client {
      * 检测私密代理有效性, 强制签名验证
      *
      * @param proxy ip字符串，逗号隔开
-     * @param sign_type "simple" or "hmacsha1"
+     * @param sign_type "token" or "hmacsha1"
      * @return Map<String, Boolean> proxy: true/false
      * @throws Exception
      */
@@ -192,13 +200,13 @@ public class Client {
     }
 
     public int get_ip_balance() throws Exception {
-        return get_ip_balance("simple");
+        return get_ip_balance("token");
     }
 
     /**
      * 私密代理计数版：获取订单的ip余额, 强制签名验证
      *
-     * @param sign_type "simple" or "hmacsha1"
+     * @param sign_type "token" or "hmacsha1"
      * @return int ip余额
      * @throws Exception
      */
@@ -311,7 +319,7 @@ public class Client {
     }
 
     public Map<String, Boolean> check_ops_valid(String proxy) throws Exception {
-        return check_ops_valid(proxy, "simple");
+        return check_ops_valid(proxy, "token");
     }
 
     public Map<String, Boolean> check_ops_valid(String[] proxy) throws Exception {
@@ -319,7 +327,7 @@ public class Client {
         for(String ip: proxy) {
             stringBuilder.append(ip).append(",");
         }
-        return check_ops_valid(stringBuilder.toString().substring(0, stringBuilder.length()-1), "simple");
+        return check_ops_valid(stringBuilder.toString().substring(0, stringBuilder.length()-1), "token");
     }
 
     public Map<String, Boolean> check_ops_valid(String[] proxy, String sign_type) throws Exception {
@@ -334,7 +342,7 @@ public class Client {
      * 检测开放代理有效性, 强制鉴权
      *
      * @param proxy 代理字符串, 逗号隔开
-     * @param sign_type "simple"
+     * @param sign_type "token"
      * @return Map<String, Boolean> 格式为: proxy: true/false
      * @throws Exception
      */
@@ -344,7 +352,7 @@ public class Client {
     }
 
     public Map<String, Integer> get_dps_valid_time(String proxy) throws Exception {
-        return get_dps_valid_time(proxy, "simple");
+        return get_dps_valid_time(proxy, "token");
     }
 
     public Map<String, Integer> get_dps_valid_time(String[] proxy) throws Exception {
@@ -352,7 +360,7 @@ public class Client {
         for(String ip: proxy) {
             stringBuilder.append(ip).append(",");
         }
-        return get_dps_valid_time(stringBuilder.substring(0, stringBuilder.length()-1), "simple");
+        return get_dps_valid_time(stringBuilder.substring(0, stringBuilder.length()-1), "token");
     }
 
     public Map<String, Integer> get_dps_valid_time(String[] proxy, String sign_type) throws Exception {
@@ -367,7 +375,7 @@ public class Client {
      * 检测私密代理ip有效时间
      *
      * @param proxy 代理字符串, 逗号隔开
-     * @param sign_type "simple"
+     * @param sign_type "token"
      * @return Map<String, Integer> 格式为: proxy: seconds(秒数)
      * @throws Exception
      */
@@ -402,9 +410,6 @@ public class Client {
         String endpoint = EndPoint.GetUserAgent.getValue();
         kwargs.put("num", num);
         Map<String, Object> params = this._get_params(endpoint, kwargs);
-        for (String k : kwargs.keySet()) {
-            params.put(k, kwargs.get(k).toString());
-        }
         String[] res = this._get_base_res("GET", endpoint, params);
         if (res[1].equals("json")) {
             JSONObject data = new JSONObject(res[0]).getJSONObject("data");
@@ -430,9 +435,6 @@ public class Client {
         String endpoint = EndPoint.GetAreaCode.getValue();
         kwargs.put("area", area);
         Map<String, Object> params = this._get_params(endpoint, kwargs);
-        for (String k : kwargs.keySet()) {
-            params.put(k, kwargs.get(k).toString());
-        }
         String[] res = this._get_base_res("GET", endpoint, params);
         if (res[1].equals("json")) {
             JSONObject data = new JSONObject(res[0]).getJSONObject("data");
@@ -456,9 +458,6 @@ public class Client {
     public Map<String, String> get_account_balance(Map<String, Object> kwargs) throws Exception {
         String endpoint = EndPoint.GetAccountBalance.getValue();
         Map<String, Object> params = this._get_params(endpoint, kwargs);
-        for (String k : kwargs.keySet()) {
-            params.put(k, kwargs.get(k).toString());
-        }
         String[] res = this._get_base_res("GET", endpoint, params);
         if (res[1].equals("json")) {
             JSONObject data = new JSONObject(res[0]).getJSONObject("data");
@@ -486,9 +485,6 @@ public class Client {
         kwargs.put("product", product);
         kwargs.put("pay_type", pay_type);
         Map<String, Object> params = this._get_params(endpoint, kwargs);
-        for (String k : kwargs.keySet()) {
-            params.put(k, kwargs.get(k).toString());
-        }
         String[] res = this._get_base_res("GET", endpoint, params);
         if (res[1].equals("json")) {
             JSONObject data = new JSONObject(res[0]).getJSONObject("data");
@@ -512,9 +508,6 @@ public class Client {
     public Map<String, String> get_order_info(Map<String, Object> kwargs) throws Exception {
         String endpoint = EndPoint.GetOrderInfo.getValue();
         Map<String, Object> params = this._get_params(endpoint, kwargs);
-        for (String k : kwargs.keySet()) {
-            params.put(k, kwargs.get(k).toString());
-        }
         String[] res = this._get_base_res("GET", endpoint, params);
         if (res[1].equals("json")) {
             JSONObject data = new JSONObject(res[0]).getJSONObject("data");
@@ -540,9 +533,6 @@ public class Client {
         String endpoint = EndPoint.SetAutoRenew.getValue();
         kwargs.put("autorenew", autorenew);
         Map<String, Object> params = this._get_params(endpoint, kwargs);
-        for (String k : kwargs.keySet()) {
-            params.put(k, kwargs.get(k).toString());
-        }
         String[] res = this._get_base_res("GET", endpoint, params);
         if (res[1].equals("json")) {
             JSONObject data = new JSONObject(res[0]).getJSONObject("data");
@@ -566,9 +556,6 @@ public class Client {
     public Map<String, String> close_order(Map<String, Object> kwargs) throws Exception {
         String endpoint = EndPoint.CloseOrder.getValue();
         Map<String, Object> params = this._get_params(endpoint, kwargs);
-        for (String k : kwargs.keySet()) {
-            params.put(k, kwargs.get(k).toString());
-        }
         String[] res = this._get_base_res("GET", endpoint, params);
         if (res[1].equals("json")) {
             JSONObject data = new JSONObject(res[0]).getJSONObject("data");
@@ -594,9 +581,6 @@ public class Client {
         String endpoint = EndPoint.SetAutoRenew.getValue();
         kwargs.put("serie", serie);
         Map<String, Object> params = this._get_params(endpoint, kwargs);
-        for (String k : kwargs.keySet()) {
-            params.put(k, kwargs.get(k).toString());
-        }
         String[] res = this._get_base_res("GET", endpoint, params);
         if (res[1].equals("json")) {
             JSONObject data = new JSONObject(res[0]).getJSONObject("data");
@@ -610,6 +594,62 @@ public class Client {
         return new HashMap<String, String>();
     }
 
+    public String[] _GetSecretToken() throws Exception {
+        String endpoint = EndPoint.GetSecretToken.getValue();
+        Map<String, Object> kwargs = new HashMap<String, Object>();
+        kwargs.put("secret_id", this.auth.getSecretId());
+        kwargs.put("secret_key", this.auth.getSecretKey());
+        kwargs.put("sign_type", "simple");
+
+        Map<String, Object> params = this._get_params(endpoint, kwargs);
+        String[] res = this._get_base_res("POST", endpoint, params);
+        if (res[1].equals("json")) {
+            JSONObject data = new JSONObject(res[0]).getJSONObject("data");
+            String secretToken = data.getString("secret_token");
+            String expire = String.valueOf(data.getInt("expire")*1000);
+            return new String[]{secretToken, expire, String.valueOf(System.currentTimeMillis())};
+        }
+        return new String[]{"","",""};
+    }
+
+    public String GetSecretToken() throws Exception {
+        String secretToken = null;
+        String cacheToken = null;
+        boolean needReset = false;
+        File secretFile = new File(this.secretPath);
+        boolean flag = secretFile.exists();
+        if (!flag) {
+            // 文件不存在则创建
+            boolean _r = secretFile.createNewFile();
+        }
+        byte[] bodyBytes = Files.readAllBytes(Paths.get(this.secretPath));
+        cacheToken = new String(bodyBytes, StandardCharsets.UTF_8);
+        if (cacheToken != null && cacheToken.length() != 0) {
+            String[] tokenList = cacheToken.split("\\|");
+            secretToken = tokenList[0];
+            long expire = Long.valueOf(tokenList[1]);
+            long lastTime = Long.valueOf(tokenList[2]);
+            if (lastTime + expire - 180 * 1000 <= System.currentTimeMillis()) {
+                needReset = true;
+            }
+        } else {
+            needReset = true;
+        }
+        if (needReset) {
+            String[] res = this._GetSecretToken();
+            cacheToken = res[0];
+            for(int i = 1; i < res.length; i++) {
+                cacheToken = cacheToken + "|" + res[i];
+            }
+            try (FileWriter fileWriterToken = new FileWriter(this.secretPath)) {
+                fileWriterToken.write(cacheToken);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            secretToken = res[0];
+        }
+        return secretToken;
+    }
 
     /**
      * 构造请求参数
@@ -621,7 +661,7 @@ public class Client {
      */
     private Map<String, Object> _get_params(String endpoint, Map<String, Object> kwargs) throws Exception {
         TreeMap<String, Object> params = new TreeMap<String, Object>();
-        params.put("orderid", this.auth.getOrderId());
+        params.put("secret_id", this.auth.getSecretId());
         for (String k : kwargs.keySet()) {
             params.put(k, kwargs.get(k).toString());
         }
@@ -630,12 +670,12 @@ public class Client {
         if (kwargs.containsKey("sign_type")) {
             sign_type = kwargs.get("sign_type").toString();
         } else {
-            sign_type = "simple";
+            sign_type = "token";
             params.put("sign_type", sign_type);
         }
 
         if (sign_type.equals("simple")) {
-            params.put("signature", this.auth.getApiKey());
+            params.put("signature", this.auth.getSecretKey());
         } else if (sign_type.equals("hmacsha1")) {
             params.put("timestamp", System.currentTimeMillis() / 1000);
             String raw_str = null;
@@ -645,7 +685,9 @@ public class Client {
                 raw_str = this.auth.getStringToSign("GET", endpoint, params);
             }
             params.put("signature", this.auth.sign(raw_str));
-        } else {
+        } else if (sign_type.equals("token")) {
+            params.put("signature", this.GetSecretToken());
+        }else {
             throw new KdlNameError(String.format("unknown sign_type %s", sign_type));
         }
 

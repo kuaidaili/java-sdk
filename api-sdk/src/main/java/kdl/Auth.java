@@ -6,17 +6,17 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 
 /**
- * 用于保存用户orderid, apiKey, 以及计算签名的对象。
+ * 用于保存用户secret_id, secret_key, 以及计算签名的对象。
  */
 public class Auth {
     private final static String CHARSET = "UTF-8";
 
-    private String orderId;
-    private String apiKey;
+    private final String secret_id;
+    private final String secret_key;
 
-    public Auth(String orderId, String apiKey) {
-        this.orderId = orderId;
-        this.apiKey = apiKey;
+    public Auth(String secret_id, String secret_key) {
+        this.secret_id = secret_id;
+        this.secret_key = secret_key;
     }
 
     public String sign(String s) throws Exception {
@@ -33,7 +33,7 @@ public class Auth {
      */
     public String sign(String s, String method) throws Exception {
         Mac mac = Mac.getInstance(method);
-        SecretKeySpec secretKeySpec = new SecretKeySpec(this.apiKey.getBytes(CHARSET), mac.getAlgorithm());
+        SecretKeySpec secretKeySpec = new SecretKeySpec(this.secret_key.getBytes(CHARSET), mac.getAlgorithm());
         mac.init(secretKeySpec);
         byte[] hash = mac.doFinal(s.getBytes(CHARSET));
         return DatatypeConverter.printBase64Binary(hash);
@@ -58,12 +58,12 @@ public class Auth {
         return s + s2s.toString().substring(0, s2s.length() - 1);
     }
 
-    public String getOrderId() {
-        return this.orderId;
+    public String getSecretId() {
+        return this.secret_id;
     }
 
-    public String getApiKey() {
-        return this.apiKey;
+    public String getSecretKey() {
+        return this.secret_key;
     }
 
 }

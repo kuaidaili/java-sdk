@@ -3,3 +3,6 @@
 .idea
 *.bat
 *.log
+.DS_Store
+.secret
+*/target/

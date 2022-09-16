@@ -23,7 +23,8 @@ public enum EndPoint {
     GetOrderInfo("dev.kdlapi.com/api/getorderinfo"),
     SetAutoRenew("dev.kdlapi.com/api/setautorenew"),
     CloseOrder("dev.kdlapi.com/api/closeorder"),
-    QueryKpsCity("dev.kdlapi.com/api/querykpscity");
+    QueryKpsCity("dev.kdlapi.com/api/querykpscity"),
+    GetSecretToken("auth.kdlapi.com/api/get_secret_token");
 
 
     private String value;
