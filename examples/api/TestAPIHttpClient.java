@@ -11,7 +11,7 @@ import org.apache.http.util.EntityUtils;
  */
 public class TestAPIHttpClient {
 
-    private static String apiUrl = "http://dev.kdlapi.com/api/getproxy/?orderid=96518362xxxxxx&num=100&protocol=1&method=2&an_ha=1&sep=1"; //api链接
+    private static String apiUrl = "http://dev.kdlapi.com/api/getproxy/?secret_id=o1fjh1re9o28876h7c08&signature=xxxxx&num=100&protocol=1&method=2&an_ha=1&sep=1"; //api链接
 
     public static void main(String[] args) throws Exception {
         CloseableHttpClient httpclient = HttpClients.createDefault();
