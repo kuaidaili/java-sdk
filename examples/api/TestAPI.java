@@ -5,7 +5,7 @@ package com.kuaidaili.sdk;
  */
 public class TestAPI {
 
-    private static String apiUrl = "http://dev.kdlapi.com/api/getproxy?orderid=96518362xxxxxx&num=10&format=json&sep=1"; //API链接
+    private static String apiUrl = "http://dev.kdlapi.com/api/getproxy?secret_id=o1fjh1re9o28876h7c08&signature=xxxxx&num=10&format=json&sep=1"; //API链接
 
     public static void main(String[] args) {
         HttpRequest request = new HttpRequest();
