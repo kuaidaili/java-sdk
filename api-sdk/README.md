@@ -4,10 +4,10 @@
 # 依赖环境
 1. JDK 7版本及以上
 2. 从[快代理](https://www.kuaidaili.com)购买相应产品
-3. [获取订单的`orderId`和`apiKey`](https://www.kuaidaili.com/usercenter/api/settings/)
+3. [获取订单的`secret_id`和`secret_key`](https://www.kuaidaili.com/usercenter/api/settings/)
 
 # 获取安装
-安装API SDK Java 之前, 请先获取订单对应的订单号和apiKey。订单号是用于标识订单, apiKey是用于加密签名字符串和服务器端验证签名字符串的密钥。apiKey必须严格保管,避免泄露。
+安装API SDK Java 之前, 请先获取订单对应的secret_id和secret_key。secret_key是用于加密签名字符串和服务器端验证签名字符串的密钥。secret_key须严格保管,避免泄露。
 
 ## 通过源码包安装
 1. 前往[Github 代码托管地址](https://github.com/kuaidaili/java-sdk/tree/master/api-sdk) 下载源码压缩包。
@@ -26,14 +26,13 @@ import java.util.Map;
 
 /**
  * 私密代理使用示例
- * 方法的默认鉴权方式请参考帮助中心api文档: "https://help.kuaidaili.com/api/intro/"
- * 若需要使用鉴权，则auth对象必须将订单号对应的api key作为第二个参数传入构造函数中，否则只能调用
- * 不需要鉴权的api，比如提取代理的api
+ * 方法的默认鉴权方式请参考帮助中心api文档: "https://www.kuaidaili.com/doc/api/auth/"
+ * auth对象必须将secret_id和secret_key参数传入构造函数中
  */
 public class useDps {
 
     public static void main(String[] args) throws Exception {
-        Auth auth = new Auth("yourorderid", "yourapikey");
+        Auth auth = new Auth("secret_id", "secret_key");
         Client client = new Client(auth);
 
         // ---------------------------------------------------------------------------
@@ -67,7 +66,7 @@ public class useDps {
         // --------------------------------------------------------------------------------
 
         /* 获取私密代理, 第一个参数为提取数量, int类型, 必填。 第二个参数为其他参数, Map<String, Object>类型, 可选。
-         * 具体有哪些参数可参考帮助中心api说明: https://help.kuaidaili.com/api/intro/
+         * 具体有哪些参数可参考帮助中心api说明: https://www.kuaidaili.com/doc/api/auth/
          * 返回String[] 代理数组
          **/
         String[] dps_proxies = client.get_dps(10);
