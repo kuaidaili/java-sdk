@@ -8,12 +8,12 @@ import java.util.Map;
 /**
  * 工具类使用示例
  * 接口鉴权说明：
- * 目前支持的鉴权方式有 "simple" 和 "hmacsha1" 两种，默认使用 "simple"鉴权。
+ * 目前支持的鉴权方式有 "token" 和 "hmacsha1" 两种，默认使用 "token"鉴权。
  */
 public class useTool {
 
     public static void main(String[] args) throws Exception {
-        Auth auth = new Auth("yourorderid", "yourapikey");
+        Auth auth = new Auth("secret_id", "secret_key");
         Client client = new Client(auth);
 
         // 获取ua

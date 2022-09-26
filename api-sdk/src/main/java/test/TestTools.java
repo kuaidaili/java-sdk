@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TestTools {
-    private Auth auth = new Auth("o9oep1omndj2g2khzren", "ne5e2pcl2f2g7i3s3o0ypo0qs31ty5gw");
+    private Auth auth = new Auth("", "");
     private Client client = new Client(auth);
 
     @Test

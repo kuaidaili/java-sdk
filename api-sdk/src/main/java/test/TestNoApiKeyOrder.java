@@ -12,7 +12,7 @@ import java.util.Map;
 import static org.junit.Assert.*;
 
 public class TestNoApiKeyOrder {
-    private Auth auth = new Auth("yourorderid", "");
+    private Auth auth = new Auth("secret_id", "");
     private Client client = new Client(auth);
 
     @Test(expected = KdlException.class)
@@ -26,7 +26,7 @@ public class TestNoApiKeyOrder {
         client.set_ip_whitelist(new String[]{});
         String[] ip_whitelist = client.get_ip_whitelist();
         assertEquals(ip_whitelist.length, 0);
-        client.set_ip_whitelist("10.31.89.93, 1.2.3.4", "simple");
+        client.set_ip_whitelist("10.31.89.93, 1.2.3.4", "token");
         ip_whitelist = client.get_ip_whitelist("hmacsha1");
         assertEquals(ip_whitelist.length, 2);
         client.set_ip_whitelist("");

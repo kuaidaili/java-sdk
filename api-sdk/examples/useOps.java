@@ -8,16 +8,16 @@ import java.util.Map;
 /**
  * 开放代理使用示例
  * 接口鉴权说明：
- * 目前支持的鉴权方式有 "simple" 和 "hmacsha1" 两种，默认使用 "simple"鉴权。
+ * 目前支持的鉴权方式有 "token" 和 "hmacsha1" 两种，默认使用 "token"鉴权。
  */
 public class useOps {
     public static void main(String[] args) throws Exception {
-        Auth auth = new Auth("yourorderid", "yourapikey");
+        Auth auth = new Auth("secret_id", "secret_key");
         Client client = new Client(auth);
 
         // ---------------------------------------------------------------------------
 
-        // 获取订单到期时间，默认simple鉴权, 返回时字符串
+        // 获取订单到期时间，默认token鉴权, 返回时字符串
         String expire_time = client.get_order_expire_time();
         System.out.println("expire_time: " + expire_time);
 
@@ -44,7 +44,7 @@ public class useOps {
 
         // ----------------------------------`-----------------------------------------------
 
-        // 检测开放代理有效性, 默认simple鉴权, 返回 Map<String, Boolean> 类型, 格式为 proxy: true/false
+        // 检测开放代理有效性, 默认token鉴权, 返回 Map<String, Boolean> 类型, 格式为 proxy: true/false
         Map<String, Boolean> valids = client.check_ops_valid(ops_proxies, "hmacsha1");
         System.out.println("osp valids: " + Arrays.toString(valids.entrySet().toArray()));
 

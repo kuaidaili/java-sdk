@@ -8,16 +8,16 @@ import java.util.Map;
 /**
  * 私密代理使用示例
  * 接口鉴权说明：
- * 目前支持的鉴权方式有 "simple" 和 "hmacsha1" 两种，默认使用 "simple"鉴权。
+ * 目前支持的鉴权方式有 "token" 和 "hmacsha1" 两种，默认使用 "token"鉴权。
  */
 public class useDps {
 
     public static void main(String[] args) throws Exception {
-        Auth auth = new Auth("yourorderid", "yourapikey");
+        Auth auth = new Auth("secre_id", "secret_key");
         Client client = new Client(auth);
 
         // ---------------------------------------------------------------------------
-        // 获取订单到期时间，默认simple鉴权, 返回时字符串
+        // 获取订单到期时间，默认token鉴权, 返回时字符串
         String expire_time = client.get_order_expire_time();
         System.out.println("expire_time: " + expire_time);
 
@@ -28,7 +28,7 @@ public class useDps {
         System.out.println("expire_time using hmacsha1: " + expire_time);
 
         // ----------------------------------------------------------------------------
-        // 获取ip白名单, 默认simple鉴权, 返回String[] ip数组
+        // 获取ip白名单, 默认token鉴权, 返回String[] ip数组
         String[] ip_whitelist = client.get_ip_whitelist();
         System.out.println("ip_whitelist: " + Arrays.toString(ip_whitelist));
 
@@ -37,7 +37,7 @@ public class useDps {
         System.out.println("ip_whitelist using hmacsha1: " + Arrays.toString(ip_whitelist));
 
         // -------------------------------------------------------------------------------
-        // 设置ip白名单, 无返回值, 默认simple鉴权，要设置的ip白名单可为字符串(IP之间用逗号隔开)或数组
+        // 设置ip白名单, 无返回值, 默认token鉴权，要设置的ip白名单可为字符串(IP之间用逗号隔开)或数组
         client.set_ip_whitelist("127.0.0.1, 192.168.0.139");
         client.set_ip_whitelist("", "hmacsha1");
         client.set_ip_whitelist(new String[]{"127.0.0.1", "192.168.0.139"}, "hmacsha1");
@@ -57,7 +57,7 @@ public class useDps {
         System.out.println("dps_proxies using other params: " + Arrays.toString(dps_proxies));
 
         // ---------------------------------------------------------------------------------
-        // 检测私密代理有效性, 默认simple鉴权, 返回 Map<String, Boolean> 类型, 格式为 proxy: true/false
+        // 检测私密代理有效性, 默认token鉴权, 返回 Map<String, Boolean> 类型, 格式为 proxy: true/false
         Map<String, Boolean> valids = client.check_dps_valid(dps_proxies, "hmacsha1");
         System.out.println("dsp valids: " + Arrays.toString(valids.entrySet().toArray()));
 
